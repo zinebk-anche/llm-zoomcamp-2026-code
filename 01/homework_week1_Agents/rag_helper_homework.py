@@ -1,18 +1,15 @@
-from ingest_homework import load_data, build_index
+# from ingest_homework import load_data, build_index
 
-documents = load_data()
-index = build_index(documents)
+# documents = load_data()
+# index = build_index(documents)
 
 INSTRUCTIONS = """
-You're a course teaching assistant.
-You're given a question from a course student and your task is to answer it.
+Your task is to answer questions from the course participants
+based on the provided context.
 
-Make multiple searches.
-
-Try to expand your search by using new keywords
-based on the results you get from the search.
-
-At the end, ask if there are other areas that the user wants to explore.
+Use the context to find relevant information and provide accurate
+answers. If the answer is not found in the context,
+respond with "I don't know."
 """.strip()
 
 
@@ -39,16 +36,16 @@ class RAGBase:
         self.prompt_template = prompt_template
         self.model = model
 
-    def search(question):
+    def search(self, question):
         boost_dict = {'question':2.0}
 
-        return index.search(
+        return self.index.search(
             question,
             boost_dict=boost_dict,
             num_results=5
         )
 
-    def build_context(search_results):
+    def build_context(self, search_results):
         lines = []
 
         for doc in search_results:
@@ -76,7 +73,7 @@ class RAGBase:
             input=input_messages
         )
 
-        return response.output_text
+        return response
     
     def rag(self, query):
         search_results = self.search(query)
