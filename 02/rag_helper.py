@@ -21,7 +21,7 @@ CONTEXT:
 """.strip()
 
 class RAGBase:
-
+    
     def __init__(
         self,
         index,
