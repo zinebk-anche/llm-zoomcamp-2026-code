@@ -1,3 +1,6 @@
 .venv
 .env
 faq.db*
+__pycache__/
+*.ipynb_checkpoints
+*.db*
