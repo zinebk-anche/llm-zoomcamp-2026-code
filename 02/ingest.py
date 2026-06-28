@@ -18,7 +18,7 @@ def load_faq_data():
         documents.extend(course_data)
 
     return documents
-
+# text search index
 def build_index(documents):
     index = Index(
         text_fields=["question", "section", "answer"],
